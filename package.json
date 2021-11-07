@@ -1,0 +1,28 @@
+{
+  "name": "contact_app",
+  "version": "1.0.0",
+  "description": "Aplikasi Kontak",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js",
+    "dev": "ls",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Fikri2901/contact-APP-NodeJS.git"
+  },
+  "author": "M. Fikri",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Fikri2901/contact-APP-NodeJS/issues"
+  },
+  "homepage": "https://github.com/Fikri2901/contact-APP-NodeJS#readme",
+  "dependencies": {
+    "validator": "^13.7.0",
+    "yargs": "^17.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.14"
+  }
+}
