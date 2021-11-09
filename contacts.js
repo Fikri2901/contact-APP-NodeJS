@@ -28,11 +28,16 @@ if (!fs.existsSync(data)) {
 //     })
 // }
 
+const ambilkontak = () => {
+    const filebuffer = fs.readFileSync('data/contact.json','utf-8');
+    const contacts = JSON.parse(filebuffer);
+    return contacts
+}
+
 
 const Simpankontak = (nama, email, nomor) => {
     const contact = {nama, email, nomor};
-    const filebuffer = fs.readFileSync('data/contact.json','utf-8');
-    const contacts = JSON.parse(filebuffer);
+    const contacts = ambilkontak();
 
     const duplikat = contacts.find((contact) => contact.nama === nama)
     if (duplikat) {
@@ -58,4 +63,44 @@ const Simpankontak = (nama, email, nomor) => {
     
 }
 
-module.exports = { Simpankontak }
+const Listkontak = () => {
+    const contacts = ambilkontak();
+    console.log('============ Data Kontak: ============')
+    contacts.forEach((contact, i) => {
+        console.log(`${i + 1}. ${contact.nama} - ${contact.nomor}`)
+    });
+    console.log('=====================================')
+}
+
+const Detailkontak = (nama) => {
+    const contacts = ambilkontak();
+    const validasi = contacts.find((contact) => contact.nama.toLowerCase() === nama.toLowerCase())
+    if (validasi) {
+        console.log('============ Detail Kontak '+nama+': ============')
+        console.log(`Nama : ${validasi.nama}`)
+        console.log(`Nomor : ${validasi.nomor}`)
+        if (validasi.email) {
+            console.log(`Email : ${validasi.email}`)
+        }
+        console.log('=================================================')
+    }else{
+        console.log(chalk.red.bold('Kontak '+nama+' tidak ada !!'))
+        return false
+    }
+}
+
+const Deletekontak = (nama) => {
+    const contacts = ambilkontak();
+    const validasi = contacts.filter((contact) => contact.nama.toLowerCase() !== nama.toLowerCase())
+    if (contacts.length === validasi.length) {
+        console.log(chalk.blueBright.bgRed.bold('Data '+nama+' tidak terdaftar !!'))
+        return false
+    }
+
+    fs.writeFileSync('data/contact.json', JSON.stringify(validasi));
+    console.log(chalk.white.bgGreen.bold("Data "+nama+" Berhasil di Hapus !!"));
+
+
+}
+
+module.exports = { Listkontak,Simpankontak, Detailkontak, Deletekontak }
