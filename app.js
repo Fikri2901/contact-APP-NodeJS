@@ -1,5 +1,6 @@
-// const {tulispertanyaan, Simpankontak } = require('./contacts')
+const {Simpankontak } = require('./contacts')
 
+const { argv } = require("yargs");
 const yargs = require("yargs");
 
 // const main = async () => {
@@ -12,4 +13,31 @@ const yargs = require("yargs");
 
 // main();
 
-console.log(yargs.argv)
+// console.log(yargs.argv)
+
+yargs.command({
+    command: 'add',
+    describe: 'Menambahkan kontak baru',
+    builder: {
+        nama: {
+            describe: 'Nama Lengkap',
+            demandOption: true,
+            type: 'string',
+        },
+        email: {
+            describe: 'Email',
+            demandOption: false,
+            type: 'string',
+        },
+        nomor: {
+            describe: 'Nomor Telephone',
+            demandOption: true,
+            type: 'string',
+        }
+    },
+    handler(argv) {
+        Simpankontak(argv.nama, argv.email, argv.nomor)
+    }
+})
+
+yargs.parse()
